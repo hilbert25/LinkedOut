@@ -1,0 +1,138 @@
+
+<!DOCTYPE html>
+<html >
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" href="../src/css/login.css">
+</head>
+<body>
+<script src="../libs/jquery-3.3.1.min.js"></script>
+<script src="../libs/nebulas.js"></script>
+<script src="../libs/nebPay.js"></script>
+<script src="../libs/util.js"></script>
+<script>
+    "use strict";
+    var nebulas = require("nebulas"),
+        Account = nebulas.Account,
+        neb = new nebulas.Neb();
+    neb.setRequest(new nebulas.HttpRequest("https://testnet.nebulas.io"));
+    var NebPay = require("nebpay");
+    var nebPay = new NebPay();
+    var dappAddress = getContractAddress();
+
+    async function getData(args){
+        var dappAddress = getContractAddress();
+        var nebulas = require("nebulas"),
+            Account = nebulas.Account,
+            neb = new nebulas.Neb();
+        neb.setRequest(new nebulas.HttpRequest("https://testnet.nebulas.io"));
+        var NebPay = require("nebpay");
+        var nebPay = new NebPay();
+        var serialNumber;
+        var from = Account.NewAccount().getAddressString();
+        var value = "0";   
+        var nonce = "0";   
+        var gas_price = "1000000" 
+        var gas_limit = "2000000" ; 
+        var contract = { 
+            "function": "get",  
+            "args": "[\""+args+"\"]"           
+        };
+        var r = await (neb.api.call(from, dappAddress, value, nonce, gas_price, gas_limit, contract).then(function (res) {
+            return res['result'];  
+        }));
+        return r;
+    }
+
+    async function setData(value){
+        console.log(value);
+        nebPay.call(dappAddress, "0", "set", "[\"" + value+ "\"]", {
+        });
+    }
+
+    async function register(){
+      var email = document.getElementById("email").value;
+      var password = document.getElementById("password").value;
+      var type = $('#type option:selected') .val();
+      var register_dic={}
+      register_dic[email.toString()+PWD] = password;
+      register_dic[email.toString()+TYPE] = type;
+      var registered = await getData(email.toString()+PWD);
+      if(registered!=="null"){
+        alert("邮箱已注册，可以直接登陆"); 
+      }else{
+        var value = dicToMyJSON(register_dic);
+        await setData(value);
+      }
+    }
+    
+    async function login(){
+      var email = document.getElementById("login_email").value;
+      var password = document.getElementById("login_password").value;
+      password = password.toString();
+      var args = email+PWD;
+      var pwd = (await getData(args)).replace(/\"/g, "");
+      if(pwd === "null"){
+        alert("邮箱尚未注册");
+      }else if(pwd !==password){
+        alert("密码错误");
+      }else{
+        var args = email+TYPE;
+        var type = await getData(args);
+        console.log(type);
+      }
+    }
+
+</script>
+<div class="cotn_principal">
+  <div class="cont_centrar">
+    <div class="cont_login">
+      <div class="cont_info_log_sign_up">
+        <div class="col_md_login">
+          <div class="cont_ba_opcitiy">
+            <h2>登录</h2>
+            <p>已有账号，直接登录！</p>
+            <button class="btn_login" onclick="cambiar_login()">登录</button>
+          </div>
+        </div>
+        <div class="col_md_sign_up">
+          <div class="cont_ba_opcitiy">
+            <h2>注册</h2>
+            <p>还没有账号？免费注册！</p>
+            <button class="btn_sign_up" onclick="cambiar_sign_up()">注册</button>
+          </div>
+        </div>
+      </div>
+      <div class="cont_back_info">
+        <div class="cont_img_back_grey"> <img src="../src/img/login_bg.jpg" alt="" /> </div>
+      </div>
+      <div class="cont_forms" >
+        <div class="cont_img_back_"> <img src="../src/img/login_bg.jpg" alt="" /> </div>
+        <div class="cont_form_login"> <a href="#" onclick="ocultar_login_sign_up()" >X</a>
+          <h2>登录</h2>
+          <input type="text" placeholder="Email" id="login_email" />
+          <input type="password" placeholder="Password" id="login_password" />
+          <button class="btn_login" onclick="login()">登录</button>
+        </div>
+        <div class="cont_form_sign_up"> <a href="#" onclick="ocultar_login_sign_up()">X</a>
+          <h2>注册</h2>
+          <input type="text" placeholder="Email" id="email"/>
+          <input type="password" placeholder="Password" id="password"/>
+          <input type="password" placeholder="Confirm Password" id="confirm_password"/>
+          <select id="type">
+            <option value="1">个人</option>
+            <option value="2">企业</option>
+            <option value="3">学校</option>
+          </select>
+          <button class="btn_sign_up" onclick="register()">注册</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="../src/js/login.js"></script>
+</body>
+</body>
+</html>
+

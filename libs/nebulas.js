@@ -22162,7 +22162,7 @@ module.exports={
   "_args": [
     [
       "elliptic@6.4.0",
-      "/home/hk-journalist/code/nebulas/neb.js"
+      "/home/hk-journalist/work/code/nebulas/neb.js"
     ]
   ],
   "_from": "elliptic@6.4.0",
@@ -22188,7 +22188,7 @@ module.exports={
   ],
   "_resolved": "http://registry.npm.taobao.org/elliptic/download/elliptic-6.4.0.tgz",
   "_spec": "6.4.0",
-  "_where": "/home/hk-journalist/code/nebulas/neb.js",
+  "_where": "/home/hk-journalist/work/code/nebulas/neb.js",
   "author": {
     "name": "Fedor Indutny",
     "email": "fedor@indutny.com"
