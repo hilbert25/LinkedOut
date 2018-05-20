@@ -73,6 +73,7 @@
       password = password.toString();
       var args = email+PWD;
       var pwd = (await getData(args)).replace(/\"/g, "");
+      console.log(pwd);
       if(pwd === "null"){
         alert("邮箱尚未注册");
       }else if(pwd !==password){
@@ -81,11 +82,11 @@
         var args = email+TYPE;
         var type = (await getData(args));
         if(type[1] == "1"){
-            window.location.href = "company.html?"+email;
-        }else if(type[1]=="2"){
-            window.location.href = "school.html?"+email;
-        }else if(type[1]=="3"){
             window.location.href = "personal.html?"+email;
+        }else if(type[1]=="2"){
+            window.location.href = "company.html?"+email;
+        }else if(type[1]=="3"){
+            window.location.href = "school.html?"+email;
         }
       }
     }

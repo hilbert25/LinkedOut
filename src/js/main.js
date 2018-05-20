@@ -241,14 +241,14 @@ jQuery(document).ready(function($) {
 
             // MixItUp plugin
             // http://mixitup.io
-            $('#portfoliolist').mixitup({
-                targetSelector: '.portfolio',
-                filterSelector: '.filter',
-                effects: ['fade'],
-                easing: 'snap',
-                // call the hover effect
-                onMixEnd: filterList.hoverEffect()
-            });
+            // $('#portfoliolist').mixitup({
+            //     targetSelector: '.portfolio',
+            //     filterSelector: '.filter',
+            //     effects: ['fade'],
+            //     easing: 'snap',
+            //     // call the hover effect
+            //     onMixEnd: filterList.hoverEffect()
+            // });
 
         },
         hoverEffect: function() {
@@ -276,13 +276,13 @@ jQuery(document).ready(function($) {
     /* ----------------------------- prettyPhoto ---------------------------- */
     /* ---------------------------------------------------------------------- */
 
-    $("a[rel^='portfolio']").prettyPhoto({
-        animation_speed: 'fast', /* fast/slow/normal */
-        social_tools: '',
-        theme: 'pp_default',
-        horizontal_padding: 5,
-        deeplinking: false,
-    });
+    // $("a[rel^='portfolio']").prettyPhoto({
+    //     animation_speed: 'fast', /* fast/slow/normal */
+    //     social_tools: '',
+    //     theme: 'pp_default',
+    //     horizontal_padding: 5,
+    //     deeplinking: false,
+    // });
 
 
 

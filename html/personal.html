@@ -40,7 +40,7 @@
                                         <div class="resp-tabs-container">
                                             <div id="profile" class="content_2">
 <h1 class="h-bloc">简历</h1>
-<input type="button" onclick = "save()" value="保存全部内容"></input>
+<input type="button" onclick ="save()" value="保存全部内容"/>
 <div class="row top-p">
     <div class="col-md-6 profile-l">
         <div class="title_content">
@@ -153,8 +153,8 @@
                                 <label>结束月份</label>
                                 <select id="edu_end_month_0"></select>
                             </div>
-                            <label id="edu_0_auth_state"></label>
-                            <input type="button" onclick="confirm_edu(edu_0)">认证</input>
+                            <p id="edu_auth_state_0" value="undeal">尚未认证</p>
+                            <input type="button" onclick="confirm_edu(edu_0)" value="undeal">尚未认证</input>
                           </form>
                     </div>
                 </div>
@@ -198,24 +198,20 @@
         <script type="text/javascript" src="../src/js/easyResponsiveTabs.min.js"></script> 	
         <script type="text/javascript" src="../src/js/jquery.mCustomScrollbar.concat.min.js"></script>		
         <script type="text/javascript" src="../src/js/main.js"></script>
+        <script src="../libs/nebulas.js"></script>
+        <script src="../libs/nebPay.js"></script>
+        <script type="text/javascript" src="../libs/util.js"></script>
 <script type="text/javascript">
     "use strict";
-    var nebulas = require("nebulas"),
-        Account = nebulas.Account,
-        neb = new nebulas.Neb();
-    neb.setRequest(new nebulas.HttpRequest("https://testnet.nebulas.io"));
+    var nebulas = require("nebulas");
+    var Account = nebulas.Account;
+    var neb = new nebulas.Neb();
     var NebPay = require("nebpay");
     var nebPay = new NebPay();
     var dappAddress = getContractAddress();
-
+    var EMAIL="";
     async function getData(args){
-        var dappAddress = getContractAddress();
-        var nebulas = require("nebulas"),
-            Account = nebulas.Account,
-            neb = new nebulas.Neb();
         neb.setRequest(new nebulas.HttpRequest("https://testnet.nebulas.io"));
-        var NebPay = require("nebpay");
-        var nebPay = new NebPay();
         var serialNumber;
         var from = Account.NewAccount().getAddressString();
         var value = "0";   
@@ -234,6 +230,7 @@
 
     async function setData(value){
         console.log(value);
+        neb.setRequest(new nebulas.HttpRequest("https://testnet.nebulas.io"));
         nebPay.call(dappAddress, "0", "set", "[\"" + value+ "\"]", {
         });
     }
@@ -262,7 +259,12 @@
         resume["email"] = email;
         resume["birth_year"] = birth_year;
         resume["phone_number"] = phone_number;
-        console.log(resume);
+        resume["edu_exp"] = createEduJSON();
+        var resume_json = dicToMyJSON(resume);
+        var value = {};
+        value[EMAIL+RESUME] = resume_json;
+        console.log(value);
+        setData(dicToMyJSON(value));
     }
 
     function initBirthYear(){
@@ -274,17 +276,90 @@
             birthYear.appendChild(option);
         }
     }
+    function initExpYearAndMonth(){
+        for(var i=0;;i++){
+            if(document.getElementById("edu_begin_year_"+i.toString())){
+                var edu_begin_year = document.getElementById("edu_begin_year_"+i.toString());
+                var edu_end_year = document.getElementById("edu_end_year_"+i.toString());
+                for(var j=1900;j<=2018;j++){
+                    var option1 = document.createElement("option");
+                    option1.setAttribute("value",j.toString());
+                    option1.innerHTML=j;
+                    edu_begin_year.appendChild(option1);
+                    var option2 = document.createElement("option");
+                    option2.setAttribute("value",j.toString());
+                    option2.innerHTML=j;
+                    edu_begin_year.appendChild(option2);
+                    edu_end_year.appendChild(option2);
+                }
+                var edu_begin_month = document.getElementById("edu_begin_month_"+i.toString());
+                var edu_end_month = document.getElementById("edu_end_month_"+i.toString());
+                for(var j=1;j<=12;j++){
+                    var option1 = document.createElement("option");
+                    option1.setAttribute("value",j.toString());
+                    option1.innerHTML=j;
+                    edu_begin_month.appendChild(option1);
+                    var option2 = document.createElement("option");
+                    option2.setAttribute("value",j.toString());
+                    option2.innerHTML=j;
+                    edu_end_month.appendChild(option2);
+                }
+            }else{
+                break;
+            }
+        }
+    }
+    async function getResume(){
+        var resume = await getData(EMAIL+RESUME);
+        return resume;
+    }
 
-    function getResume(){
-        var resume = await getData()
+    function createEduJSON(){
+        var edu_exp = [];
+        for(var i=0;;i++){
+            if(document.getElementById("edu_"+i.toString())){
+                var edu = {};
+                edu["school"] = document.getElementById("school_"+i.toString()).value;
+                edu["major"] = document.getElementById("major_"+i.toString()).value;
+                edu["degree"] = document.getElementById("degree_"+i.toString()).value;
+                edu["edu_begin_year"] = document.getElementById("edu_begin_year_"+i.toString()).value;
+                edu["edu_begin_month"] = document.getElementById("edu_begin_month_"+i.toString()).value;
+                edu["edu_end_year"] = document.getElementById("edu_end_year_"+i.toString()).value;
+                edu["edu_end_month"] = document.getElementById("edu_end_month_"+i.toString()).value;
+                edu["edu_auth_state"] = document.getElementById("edu_auth_state_"+i.toString()).innerHTML;
+                edu_exp.push(edu);
+            }else{
+                break;
+            }
+        }
+        return dicToMyJSON(edu_exp);
     }
     function init(){
-        console.log(location.search);
+        EMAIL = location.search.substring(1,location.search.length);
         initBirthYear();
+        initExpYearAndMonth();
     }
+
     window.onload=function(){
-        
-    }
+        init();
+        var data= Promise.resolve(getResume())
+        Promise.resolve(getResume()).then(function (resume) { 
+            resume = resume.substring(1,resume.length-1);
+            resume = JSON.parse(resume.replace(/'/g,'"'));
+            document.getElementById("name").setAttribute("value",resume["name"]);
+            document.getElementById("email").setAttribute("value",resume["email"]);
+            document.getElementById("phone_number").setAttribute("value",resume["phone_number"]);
+            document.getElementById("position").setAttribute("value",resume["position"]); 
+            document.getElementById("birth_year").value = resume["birth_year"];  
+            document.getElementById("gender").value = resume["gender"];    
+            if(resume.hasOwnProperty("edu_exp")){
+
+            }
+            if(resume.hasOwnProperty("work_exp")){
+
+            }
+        })
+        }
 </script>
 
     </body>
