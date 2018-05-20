@@ -80,7 +80,17 @@
       }else{
         var args = email+TYPE;
         var type = await getData(args);
-        console.log(type);
+        switch(type){
+          case 1://企业
+            window.location = "company.html?"+email;
+          break;
+          case 2://学校
+            window.location = "school.html?"+email;
+          break;
+          case 3://个人
+            window.location = "personal.html?"+email;
+          break;
+        }
       }
     }
 

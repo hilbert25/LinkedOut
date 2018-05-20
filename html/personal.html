@@ -1,7 +1,6 @@
 <!DOCTYPE html>
  <html class="no-js"> <!--<![endif]-->
     <head>
-
         <title></title>
         <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -17,20 +16,15 @@
                     margin-left: 13px;
                 }
             }
-			
 			@media only screen and (min-width : 800px) and (max-width : 991px){
                 .resp-vtabs .resp-tabs-container {
                     margin-left: 13px;
 					width:89%;
                 }
             }		
-
         </style>
-
     </head>
-
     <body>
-
         <div class="wrapper">
             <section class="tab-content">
                 <div class="container">
@@ -38,79 +32,76 @@
                     <div class="col-md-12">
                           <div class="row">   
                                 <div class="col-md-9 flexy_content" style="padding-left: 0;padding-right: 0;">
-
-                                    <!-- verticalTab menu -->
                                     <div id="verticalTab">
                                         <ul class="resp-tabs-list">                                        
                                             <li class="tabs-contact hi-icon-wrap hi-icon-effect-5 hi-icon-effect-5a" data-tab-name="contact" style="margin-bottom: 48px !important;">      
                                             </li>
-
                                          </ul>
-                                        <!-- /resp-tabs-list -->
-
-
-
-                                        <!-- resp-tabs-container --> 
                                         <div class="resp-tabs-container">
-
-                                            <!-- profile -->
                                             <div id="profile" class="content_2">
-                                                <!-- .title -->
-<h1 class="h-bloc">Profile - About Me</h1>
-
+<h1 class="h-bloc">简历</h1>
+<input type="button" onclick = "save()" value="保存全部内容"></input>
 <div class="row top-p">
     <div class="col-md-6 profile-l">
- 		
-        <!--About me-->
         <div class="title_content">
-            <div class="text_content">brown smith</div>
+            <div class="text_content" id="name_title">简历</div>
             <div class="clear"></div>
         </div>
-
 		   <ul class="about">
-
             <li>
                 <i class="glyphicon glyphicon-user"></i>
-                <label>Name</label>
-                <span class="value">Brown Smith</span>
+                <label>姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名</label>
+                <input class="value" id="name" readonly="true" style="border: 0px;background-color:transparent"></input>
+                <i class="glyphicon glyphicon-tag" onclick="changeReadOnly('name')" id="name_btn">点击修改</i>
                 <div class="clear"></div>
             </li>
-
+            <li>
+                <i class="glyphicon glyphicon-adjust"></i>
+                <label>性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别</label>
+                <select id="gender">
+                    <option value="男" >男</option>
+                    <option value="女">女</option>
+                </select>
+                <span class="value" id="gender"></span>
+                <i class="glyphicon glyphicon-tag" onclick="changeReadOnly('gender')" id="gender_btn">点击修改</i>
+                <div class="clear"></div>
+            </li>
             <li>
                 <i class="glyphicon glyphicon-calendar"></i>
-                <label>Date of birth</label>
-                <span class="value">March 18, 1988</span>
+                <label>出生年份</label>
+                <select id="birth_year">
+
+                </select>
+                <span class="value" id="birth_year"></span>
+                <i class="glyphicon glyphicon-tag" onclick="changeReadOnly('birth_year')" id="birth_year_btn">点击修改</i>
                 <div class="clear"></div>
             </li>
-
-            <li> 
-                <i class="glyphicon glyphicon-map-marker"></i>
-                <label>Adress</label>
-                <span class="value">San Francisco , CA</span>
-                <div class="clear"></div>
-            </li>
-
             <li>
                 <i class="glyphicon glyphicon-envelope"></i>
-                <label>Email</label>
-                <span class="value">brown.smith@gmail.com</span>
+                <label>电子邮件</label>
+                <input class="value" id="email" readonly="true" style="border: 0px;background-color:transparent"></input>
+                <span class="value" id="email"></span>
+                <i class="glyphicon glyphicon-tag" onclick="changeReadOnly('email')" id="email_btn">点击修改</i>
                 <div class="clear"></div>
             </li>
 
             <li>
                 <i class="glyphicon glyphicon-phone"></i>
-                <label>Phone</label>
-                <span class="value">+123 (21) 1234-5678</span>
+                <label>手机号码</label>
+                <input class="value" id="phone_number" readonly="true" style="border: 0px;background-color:transparent"></input>
+                <span class="value" id="phone_number"></span>
+                <i class="glyphicon glyphicon-tag" onclick="changeReadOnly('phone_number')" id="phone_number_btn">点击修改</i>
                 <div class="clear"></div>
             </li>
 
             <li>
-                <i class="glyphicon glyphicon-globe"></i>
-                <label>Website</label>
-                <span class="value"><a href="#" target="_blank">www.brown-smith.com</a></span>
+                <i class="glyphicon glyphicon-road"></i>
+                <label>当前职务</label>
+                <input class="value" id="position" readonly="true" style="border: 0px;background-color:transparent"></input>
+                <span class="value" id="position"></span>
+                <i class="glyphicon glyphicon-tag" onclick="changeReadOnly('position')" id="position_btn">点击修改</i>
                 <div class="clear"></div>
             </li>
-
         </ul>
 
 
@@ -127,7 +118,7 @@
     <div class="col-md-12">
         <div class="bottom-p">
             <div class="title_content">
-                <div class="text_content">My Services 2</div>
+                <div class="text_content">个人经历</div>
                 <div class="clear"></div>
             </div>
     
@@ -136,59 +127,165 @@
                     <div class="panel-heading">
                         <h4 class="panel-title">
                             <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" class="collapse_tabs">
-                                Making Money
+                                教育经历
                                 <i class="glyphicon glyphicon-chevron-up" style="float: right;font-size: 13px;"></i>
                             </a>
                         </h4>
                     </div>
                     <div id="collapseOne" class="panel-collapse collapse in">
-                        <div class="panel-body">
-                            <i class="fa fa-quote-left"></i>  Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                        </div>
+                        <form class="form-inline" role="form" id="edu_0">
+                            <div class="form-group">
+                              <label>学校</label>
+                              <input type="text" class="form-control" id="school_0" placeholder="">
+                              <label>专业</label>
+                              <input type="text" class="form-control" id="major_0" placeholder="">
+                              <select id="degree_0">
+                                  <option value="学士">学士</option>
+                                  <option value="硕士">硕士</option>
+                                  <option value="博士">博士</option>
+                              </select>
+                                <label>起始年份</label>
+                                <select id="edu_begin_year_0"></select>
+                                <label>起始月份</label>
+                                <select id="edu_begin_month_0"></select>
+                                <label>结束年份</label>
+                                <select id="edu_end_year_0"></select>
+                                <label>结束月份</label>
+                                <select id="edu_end_month_0"></select>
+                            </div>
+                            <label id="edu_0_auth_state"></label>
+                            <input type="button" onclick="confirm_edu(edu_0)">认证</input>
+                          </form>
                     </div>
                 </div>
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">
                             <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" class="collapse_tabs">
-                                Easy to Customize
+                                工作经历
                                 <i class="glyphicon glyphicon-chevron-down" style="float: right;font-size: 13px;"></i>
                             </a>
                         </h4>
                     </div>
                     <div id="collapseTwo" class="panel-collapse collapse">
                         <div class="panel-body">
-                            <i class="fa fa-quote-left"></i>  Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                        </div>
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" class="collapse_tabs">
-                                Moving Let Us Help
-                                <i class="glyphicon glyphicon-chevron-down" style="float: right;font-size: 13px;"></i>
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="collapseThree" class="panel-collapse collapse">
-                        <div class="panel-body">
-                            <i class="fa fa-quote-left"></i>  Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                        </div>
+                            <form class="form-inline" role="form" id="work_0">
+                                <div class="form-group">
+                                  <label>公司</label>
+                                  <input type="text" class="form-control" id="company_0" placeholder="">
+                                  <label>职务</label>
+                                  <input type="text" class="form-control" id="position_0" placeholder="">
+                                  <label>起始年份</label>
+                                  <select id="work_begin_year_0"></select>
+                                  <label>起始月份</label>
+                                  <select id="work_begin_month_0"></select>
+                                  <label>结束年份</label>
+                                  <select id="work_end_year_0"></select>
+                                  <label>结束月份</label>
+                                  <select id="work_end_month_0"></select>
+                                </div>
+                              </form> </div>
                     </div>
                 </div>
             </div>
     
         </div>
- </div>
+    </div>
   </div>
-
-                                            </div>
+</div>
         <script type="text/javascript" src="../src/js/jquery.min.js"></script>
         <script type="text/javascript" src="../src/js/bootstrap.min.js"></script> 
         <script type="text/javascript" src="../src/js/easyResponsiveTabs.min.js"></script> 	
         <script type="text/javascript" src="../src/js/jquery.mCustomScrollbar.concat.min.js"></script>		
         <script type="text/javascript" src="../src/js/main.js"></script>
+<script type="text/javascript">
+    "use strict";
+    var nebulas = require("nebulas"),
+        Account = nebulas.Account,
+        neb = new nebulas.Neb();
+    neb.setRequest(new nebulas.HttpRequest("https://testnet.nebulas.io"));
+    var NebPay = require("nebpay");
+    var nebPay = new NebPay();
+    var dappAddress = getContractAddress();
+
+    async function getData(args){
+        var dappAddress = getContractAddress();
+        var nebulas = require("nebulas"),
+            Account = nebulas.Account,
+            neb = new nebulas.Neb();
+        neb.setRequest(new nebulas.HttpRequest("https://testnet.nebulas.io"));
+        var NebPay = require("nebpay");
+        var nebPay = new NebPay();
+        var serialNumber;
+        var from = Account.NewAccount().getAddressString();
+        var value = "0";   
+        var nonce = "0";   
+        var gas_price = "1000000" 
+        var gas_limit = "2000000" ; 
+        var contract = { 
+            "function": "get",  
+            "args": "[\""+args+"\"]"           
+        };
+        var r = await (neb.api.call(from, dappAddress, value, nonce, gas_price, gas_limit, contract).then(function (res) {
+            return res['result'];  
+        }));
+        return r;
+    }
+
+    async function setData(value){
+        console.log(value);
+        nebPay.call(dappAddress, "0", "set", "[\"" + value+ "\"]", {
+        });
+    }
+
+    function changeReadOnly(id){
+        var label = document.getElementById(id);
+        if(label.getAttribute("readonly") =="true"){
+            label.removeAttribute("readonly");
+            label.setAttribute("style","border: 0px;");
+        }else{
+            label.setAttribute("readonly","true");
+            label.setAttribute("style","border: 0px;background-color:transparent");
+        }
+        console.log(label);
+    }
+
+    function save(){
+        var name = document.getElementById("name").value;
+        var gender = document.getElementById("gender").value;
+        var email = document.getElementById("email").value;
+        var birth_year = document.getElementById("birth_year").value;
+        var phone_number = document.getElementById("phone_number").value;
+        var resume = {};
+        resume["name"] = name;
+        resume["gender"] = gender;
+        resume["email"] = email;
+        resume["birth_year"] = birth_year;
+        resume["phone_number"] = phone_number;
+        console.log(resume);
+    }
+
+    function initBirthYear(){
+        var birthYear = document.getElementById("birth_year");
+        for(var i=1900;i<=2018;i++){
+            var option = document.createElement("option");
+            option.setAttribute("value",i.toString());
+            option.innerHTML=i;
+            birthYear.appendChild(option);
+        }
+    }
+
+    function getResume(){
+        var resume = await getData()
+    }
+    function init(){
+        console.log(location.search);
+        initBirthYear();
+    }
+    window.onload=function(){
         
+    }
+</script>
+
     </body>
 </html>
