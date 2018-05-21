@@ -154,7 +154,7 @@
                                 <select id="edu_end_month_0"></select>
                             </div>
                             <p id="edu_auth_state_0" value="undeal">尚未认证</p>
-                            <input type="button" onclick="confirm_edu(edu_0)" value="undeal">尚未认证</input>
+                            <input type="button" onclick="confirm_edu(edu_0)" value="undeal"></input>
                           </form>
                     </div>
                 </div>
@@ -339,7 +339,17 @@
         initBirthYear();
         initExpYearAndMonth();
     }
-
+    function getExpCount(exp){//exp =edu or work
+        var count = 0;
+        for(var i=0;;i++){
+            if(document.getElementById(exp+"_"+i.toString())){
+                count+=1;
+            }else{
+                break;
+            }
+        }
+        return count;
+    }
     window.onload=function(){
         init();
         var data= Promise.resolve(getResume())
