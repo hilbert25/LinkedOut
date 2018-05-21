@@ -229,9 +229,9 @@
     }
 
     async function setData(value){
-        console.log(value);
+        value = value.replace(/"/g,"'");
         neb.setRequest(new nebulas.HttpRequest("https://testnet.nebulas.io"));
-        nebPay.call(dappAddress, "0", "set", "[\"" + value+ "\"]", {
+        nebPay.call(dappAddress, "0", "set", '["' + value+ '"]', {
         });
     }
 
@@ -259,12 +259,13 @@
         resume["email"] = email;
         resume["birth_year"] = birth_year;
         resume["phone_number"] = phone_number;
-        resume["edu_exp"] = createEduJSON();
-        var resume_json = dicToMyJSON(resume);
+        //都放到dict最后转json
+        //resume["edu_exp"] = createEduJSON();
         var value = {};
-        value[EMAIL+RESUME] = resume_json;
+        value[EMAIL+RESUME] = resume;
+        value = JSON.stringify(value);
         console.log(value);
-        setData(dicToMyJSON(value));
+        //setData(value);
     }
 
     function initBirthYear(){
@@ -332,7 +333,7 @@
                 break;
             }
         }
-        return dicToMyJSON(edu_exp);
+        return JSON.stringify(edu_exp);
     }
     function init(){
         EMAIL = location.search.substring(1,location.search.length);
@@ -354,8 +355,10 @@
         init();
         var data= Promise.resolve(getResume())
         Promise.resolve(getResume()).then(function (resume) { 
-            resume = resume.substring(1,resume.length-1);
-            resume = JSON.parse(resume.replace(/'/g,'"'));
+            resume = myJSONParse(resume);
+            if(resume == null){
+                return;
+            }
             document.getElementById("name").setAttribute("value",resume["name"]);
             document.getElementById("email").setAttribute("value",resume["email"]);
             document.getElementById("phone_number").setAttribute("value",resume["phone_number"]);
