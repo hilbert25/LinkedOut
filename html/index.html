@@ -63,6 +63,7 @@
         alert("邮箱已注册，可以直接登陆"); 
       }else{
         var value = dicToMyJSON(register_dic);
+        console.log(value);
         await setData(value);
       }
     }
@@ -72,8 +73,7 @@
       var password = document.getElementById("login_password").value;
       password = password.toString();
       var args = email+PWD;
-      var pwd = (await getData(args)).replace(/\"/g, "");
-      console.log(pwd);
+      var pwd = myJSONParse(await getData(args));
       if(pwd === "null"){
         alert("邮箱尚未注册");
       }else if(pwd !==password){
