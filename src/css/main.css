@@ -5,7 +5,7 @@
 
 @media (min-width: 1200px) {
     .container {
-        width: 1130px !important;
+        width: 100% !important;
     }
 }
 
@@ -36,7 +36,7 @@
 #custumize-style {
     display: none;
 }
-label {
+ label {
     font-weight: 400 !important;
 }
 .text-left {
@@ -755,6 +755,7 @@ h2.resp-accordion:hover {
 ---------------------------------------------------*/
 #profile .about i.glyphicon  {
     margin-right: 3px;
+    cursor:pointer;
 }
 
 #profile .profile-r {
@@ -1243,7 +1244,6 @@ ul.about {
     width: 100px;
     height: 100px;
     margin-right: 15px;
-    float: left;
     border-radius: 50px;
 }
 
@@ -2346,6 +2346,7 @@ ul.info-post li {
 
     #profile .about i.glyphicon {
         margin-right: 0;
+        margin-left:5px;
     }
 
     p {
@@ -2568,6 +2569,7 @@ ul.info-post li {
 
 /* The CSS */
 select {
+    width:155px;
     padding:3px;
     margin: 0;
     -webkit-border-radius:4px;
