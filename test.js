@@ -4,12 +4,23 @@
 //     return JSON.parse(value);
 // }
 
-var data = {"a-resume":{"name":"","gender":"男","email":"","birth_year":"1900","phone_number":""}};
+var data ={};
+data["a-resume"]={"name":"","gender":"男","email":"","birth_year":"1900","phone_number":""};
+var t = {"school":"x","degree":"doctor"}
+data["edu"]=t;
+console.log(data);
 data = JSON.stringify(data);
 data = data.replace(/"/g,"'");
 data = data.replace(/'/g,'"');
+
 data = JSON.parse(data);
-for(k in data){
-    console.log(k,data[k]);
+
+resume = eval(data["a-resume"]);
+for(k in resume){
+    console.log(k,resume[k]);
+}
+edu = eval(data['edu'])
+for(k in edu){
+    console.log(k,edu[k]);
 }
 
