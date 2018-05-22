@@ -1,6 +1,7 @@
 var TYPE = "-type";
 var PWD = "-pwd";
 var RESUME = "-resume";
+var USER = "";
 function getContractAddress(){
     return "n1tucGYf2q4aF4DK5XzBy7t3WEfs5wZfYSo";
 }

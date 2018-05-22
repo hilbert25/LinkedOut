@@ -175,6 +175,8 @@
                                   <input type="text" class="form-control" id="company_0" placeholder="">
                                   <label>职务</label>
                                   <input type="text" class="form-control" id="position_0" placeholder="">
+                                  <label>描述</label>
+                                  <input type="text" class="form-control" id="content_0" placeholder="">
                                   <label>起始年份</label>
                                   <select id="work_begin_year_0"></select>
                                   <label>起始月份</label>
@@ -184,6 +186,8 @@
                                   <label>结束月份</label>
                                   <select id="work_end_month_0"></select>
                                 </div>
+                                <p id="work_auth_state_0" value="undeal">尚未认证</p>
+                                <input type="button" onclick="confirm_work(work_0)" value="undeal"></input>
                               </form> </div>
                     </div>
                 </div>
@@ -259,13 +263,13 @@
         resume["email"] = email;
         resume["birth_year"] = birth_year;
         resume["phone_number"] = phone_number;
-        //都放到dict最后转json
-        //resume["edu_exp"] = createEduJSON();
-        var value = {};
-        value[EMAIL+RESUME] = resume;
-        value = JSON.stringify(value);
+        resume["edu_exp"] = createEduExp();
+        resume["work_exp"] = createWorkExp();
+        var data = {};
+        data[EMAIL+RESUME] = resume;
+        data = dicToMyJSON(data);
         console.log(value);
-        //setData(value);
+        setData(data);
     }
 
     function initBirthYear(){
@@ -315,27 +319,43 @@
         return resume;
     }
 
-    function createEduJSON(){
+    function createEduExp(){
         var edu_exp = [];
-        for(var i=0;;i++){
-            if(document.getElementById("edu_"+i.toString())){
-                var edu = {};
-                edu["school"] = document.getElementById("school_"+i.toString()).value;
-                edu["major"] = document.getElementById("major_"+i.toString()).value;
-                edu["degree"] = document.getElementById("degree_"+i.toString()).value;
-                edu["edu_begin_year"] = document.getElementById("edu_begin_year_"+i.toString()).value;
-                edu["edu_begin_month"] = document.getElementById("edu_begin_month_"+i.toString()).value;
-                edu["edu_end_year"] = document.getElementById("edu_end_year_"+i.toString()).value;
-                edu["edu_end_month"] = document.getElementById("edu_end_month_"+i.toString()).value;
-                edu["edu_auth_state"] = document.getElementById("edu_auth_state_"+i.toString()).innerHTML;
-                edu_exp.push(edu);
-            }else{
-                break;
-            }
-        }
-        return JSON.stringify(edu_exp);
+        var count = getExpCount("edu");
+        for(var i=0;i<count;i++){
+            var edu = {};
+            edu["school"] = document.getElementById("school_"+i.toString()).value;
+            edu["major"] = document.getElementById("major_"+i.toString()).value;
+            edu["degree"] = document.getElementById("degree_"+i.toString()).value;
+            edu["edu_begin_year"] = document.getElementById("edu_begin_year_"+i.toString()).value;
+            edu["edu_begin_month"] = document.getElementById("edu_begin_month_"+i.toString()).value;
+            edu["edu_end_year"] = document.getElementById("edu_end_year_"+i.toString()).value;
+            edu["edu_end_month"] = document.getElementById("edu_end_month_"+i.toString()).value;
+            edu["edu_auth_state"] = document.getElementById("edu_auth_state_"+i.toString()).innerHTML;
+            edu_exp.push(edu);
+    	}
+        return edu_exp;
+    }
+
+    function createWorkExp(){
+    	var work_exp=[];
+    	var count = getExpCount("work");
+    	for(var i=0;i<count;i++){
+            var work = {};
+            work["company"] = document.getElementById("company_"+i.toString()).value;
+            work["position"] = document.getElementById("position_"+i.toString()).value;
+            work["content"] = document.getElementById("content_"+i.toString()).value;
+            work["work_begin_year"] = document.getElementById("work_begin_year_"+i.toString()).value;
+            work["ework_begin_month"] = document.getElementById("work_begin_month_"+i.toString()).value;
+            work["work_end_year"] = document.getElementById("work_end_year_"+i.toString()).value;
+            work["work_end_month"] = document.getElementById("work_end_month_"+i.toString()).value;
+            work["work_auth_state"] = document.getElementById("work_auth_state_"+i.toString()).innerHTML;
+            work_exp.push(work);
+    	}
+    	return work_exp;
     }
     function init(){
+        console.log("curUser",document.cookie);
         EMAIL = location.search.substring(1,location.search.length);
         initBirthYear();
         initExpYearAndMonth();

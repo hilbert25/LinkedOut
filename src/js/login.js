@@ -1,10 +1,3 @@
-/****************************************************************
- *																*		
- * 						      浠ｇ爜搴�							*
- *                        www.dmaku.com							*
- *       		  鍔姏鍒涘缓瀹屽杽銆佹寔缁洿鏂版彃浠朵互鍙婃ā鏉�			*
- * 																*
-****************************************************************/
 
 function cambiar_login() {
   document.querySelector('.cont_forms').className = "cont_forms cont_forms_active_login";  
