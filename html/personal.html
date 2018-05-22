@@ -25,8 +25,8 @@
         </style>
     </head>
     <body>
-        <div class="wrapper">
-            <section class="tab-content">
+        <div class="wrapper" style="width:100%;height:100%;">
+            <section class="tab-content" style="padding-left: 0;padding-right: 0;">
                 <div class="container">
                     <div class="row">
                     <div class="col-md-12">
@@ -134,7 +134,6 @@
                     </div>
                     <div id="collapseOne" class="panel-collapse collapse in">
                         <form class="form-inline" role="form" id="edu_0">
-                            <div class="form-group">
                               <label>学校</label>
                               <input type="text" class="form-control" id="school_0" placeholder="">
                               <label>专业</label>
@@ -152,7 +151,6 @@
                                 <select id="edu_end_year_0"></select>
                                 <label>结束月份</label>
                                 <select id="edu_end_month_0"></select>
-                            </div>
                             <p id="edu_auth_state_0" value="undeal">尚未认证</p>
                             <input type="button" onclick="confirm_edu(edu_0)" value="undeal"></input>
                           </form>
@@ -168,7 +166,6 @@
                         </h4>
                     </div>
                     <div id="collapseTwo" class="panel-collapse collapse">
-                        <div class="panel-body">
                             <form class="form-inline" role="form" id="work_0">
                                 <div class="form-group">
                                   <label>公司</label>
@@ -185,7 +182,6 @@
                                   <select id="work_end_year_0"></select>
                                   <label>结束月份</label>
                                   <select id="work_end_month_0"></select>
-                                </div>
                                 <p id="work_auth_state_0" value="undeal">尚未认证</p>
                                 <input type="button" onclick="confirm_work(work_0)" value="undeal"></input>
                               </form> </div>
@@ -268,7 +264,6 @@
         var data = {};
         data[EMAIL+RESUME] = resume;
         data = dicToMyJSON(data);
-        console.log(value);
         setData(data);
     }
 
@@ -282,7 +277,8 @@
         }
     }
     function initExpYearAndMonth(){
-        for(var i=0;;i++){
+        var edu_count = getExpCount("edu");
+        for(var i=0;i<edu_count;i++){
             if(document.getElementById("edu_begin_year_"+i.toString())){
                 var edu_begin_year = document.getElementById("edu_begin_year_"+i.toString());
                 var edu_end_year = document.getElementById("edu_end_year_"+i.toString());
@@ -294,7 +290,6 @@
                     var option2 = document.createElement("option");
                     option2.setAttribute("value",j.toString());
                     option2.innerHTML=j;
-                    edu_begin_year.appendChild(option2);
                     edu_end_year.appendChild(option2);
                 }
                 var edu_begin_month = document.getElementById("edu_begin_month_"+i.toString());
@@ -308,6 +303,37 @@
                     option2.setAttribute("value",j.toString());
                     option2.innerHTML=j;
                     edu_end_month.appendChild(option2);
+                }
+            }else{
+                break;
+            }
+        }
+        var work_count = getExpCount("work");
+        for(var i=0;i<work_count;i++){
+            if(document.getElementById("work_begin_year_"+i.toString())){
+                var work_begin_year_ = document.getElementById("work_begin_year_"+i.toString());
+                var work_end_year = document.getElementById("work_end_year_"+i.toString());
+                for(var j=1900;j<=2018;j++){
+                    var option1 = document.createElement("option");
+                    option1.setAttribute("value",j.toString());
+                    option1.innerHTML=j;
+                    work_begin_year_.appendChild(option1);
+                    var option2 = document.createElement("option");
+                    option2.setAttribute("value",j.toString());
+                    option2.innerHTML=j;
+                    work_end_year.appendChild(option2);
+                }
+                var work_begin_month = document.getElementById("work_begin_month_"+i.toString());
+                var work_end_month = document.getElementById("work_end_month_"+i.toString());
+                for(var j=1;j<=12;j++){
+                    var option1 = document.createElement("option");
+                    option1.setAttribute("value",j.toString());
+                    option1.innerHTML=j;
+                    work_begin_month.appendChild(option1);
+                    var option2 = document.createElement("option");
+                    option2.setAttribute("value",j.toString());
+                    option2.innerHTML=j;
+                    work_end_month.appendChild(option2);
                 }
             }else{
                 break;
@@ -355,7 +381,6 @@
     	return work_exp;
     }
     function init(){
-        console.log("curUser",document.cookie);
         EMAIL = location.search.substring(1,location.search.length);
         initBirthYear();
         initExpYearAndMonth();
@@ -371,8 +396,103 @@
         }
         return count;
     }
+    function addEduExpView(index) {
+        var area = document.getElementById("collapseOne");
+        var form = document.createElement("form");
+        form.setAttribute("class","form-inline");
+        form.setAttribute("role","form");
+        form.setAttribute("id","edu_0");
+
+        var label0 = document.createElement("label");
+        label0.innerHTML = "学校";
+        form.appendChild(label0);
+
+        var input0 = document.createElement("input");
+        input0.setAttribute("type","text");
+        input0.setAttribute("class","form-control");
+        input0.setAttribute("id","school_"+index);
+        input0.setAttribute("placeholder","");
+        form.appendChild(input0);
+
+        var label1 = document.createElement("label");
+        label1.innerHTML = "专业";
+        form.appendChild(label1);
+
+        var input1 = document.createElement("input");
+        input1.setAttribute("type","text");
+        input1.setAttribute("class","form-control");
+        input1.setAttribute("id","major_"+index);
+        input1.setAttribute("placeholder","");
+        form.appendChild(input1);
+
+        var select = document.createElement("select");
+        select.setAttribute("value","degree_"+index);
+
+        var option0 = document.createElement("option");
+        option0.setAttribute("value","学士");
+        option0.innerHTML="学士";
+        select.appendChild(option0);
+
+        
+        var option1 = document.createElement("option");
+        option1.setAttribute("value","硕士");
+        option1.innerHTML="硕士";
+        select.appendChild(option1);
+
+        
+        var option2 = document.createElement("option");
+        option2.setAttribute("value","博士");
+        option2.innerHTML="博士";
+        select.appendChild(option2);
+        form.appendChild(select);
+
+        var label_begin_year = document.createElement("label");
+        label_begin_year.innerHTML = "起始年份";
+        form.appendChild(label_begin_year);
+        var select_begin_year = document.createElement("select");
+        select.setAttribute("id","edu_begin_year_"+index);
+        form.appendChild(select_begin_year);
+
+        
+        var label_begin_month = document.createElement("label");
+        label_begin_month.innerHTML = "起始年份";
+        form.appendChild(label_begin_month);
+        var select_begin_month = document.createElement("select");
+        select.setAttribute("id","edu_begin_month_"+index);
+        form.appendChild(select_begin_month);
+
+        var label_end_year = document.createElement("label");
+        label_end_year.innerHTML = "起始年份";
+        form.appendChild(label_end_year);
+        var select_end_year = document.createElement("select");
+        select.setAttribute("id","edu_end_year_"+index);
+        form.appendChild(select_end_year);
+
+        
+        var label_end_month = document.createElement("label");
+        label_end_month.innerHTML = "起始年份";
+        form.appendChild(label_end_month);
+        var select_end_month = document.createElement("select");
+        select.setAttribute("id","edu_end_month_"+index);
+        form.appendChild(select_end_month);
+
+        var p =document.createElement("p");
+        p.setAttribute("id","edu_auth_state_"+index);
+        p.setAttribute("value","undeal");
+        p.innerHTML="尚未认证";
+        form.appendChild(p);
+
+        var input = document.createElement("input");
+        input.setAttribute("type","button");
+        input.setAttribute("onclick","confirm_edu(edu_"+index+")");
+        input.setAttribute("value","undeal");
+        form.appendChild(input);
+        
+        area.appendChild(form);
+    }
     window.onload=function(){
         init();
+        addEduExpView(2);
         var data= Promise.resolve(getResume())
         Promise.resolve(getResume()).then(function (resume) { 
             resume = myJSONParse(resume);
@@ -386,7 +506,10 @@
             document.getElementById("birth_year").value = resume["birth_year"];  
             document.getElementById("gender").value = resume["gender"];    
             if(resume.hasOwnProperty("edu_exp")){
-
+                var edu_exp = resume["edu_exp"];
+                for(var i=0;i<edu_exp.length;i++){
+                    console.log(edu_exp);
+                }
             }
             if(resume.hasOwnProperty("work_exp")){
 
