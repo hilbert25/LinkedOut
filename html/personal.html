@@ -22,11 +22,12 @@
 					width:89%;
                 }
             }		
+            
         </style>
     </head>
-    <body>
-        <div class="wrapper" style="width:100%;height:100%;">
-            <section class="tab-content" style="padding-left: 0;padding-right: 0;">
+    <body style="overflow:scroll;overflow-y:hidden;overflow-x:hidden;">
+        <div class="wrapper" style="width:135%;height:1000%;">
+            <section class="tab-content" style="padding-left: 0;padding-right: 0; height: 100%">
                 <div class="container">
                     <div class="row">
                     <div class="col-md-12">
@@ -129,11 +130,12 @@
                             <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" class="collapse_tabs">
                                 教育经历
                                 <i class="glyphicon glyphicon-chevron-up" style="float: right;font-size: 13px;"></i>
+                                <input type="button" onclick="addAWorkView()" value="添加一条"></input>
                             </a>
                         </h4>
                     </div>
                     <div id="collapseOne" class="panel-collapse collapse in">
-                        <form class="form-inline" role="form" id="edu_0">
+                        <!-- <form class="form-inline" role="form" id="edu_0">
                               <label>学校</label>
                               <input type="text" class="form-control" id="school_0" placeholder="">
                               <label>专业</label>
@@ -153,7 +155,7 @@
                                 <select id="edu_end_month_0"></select>
                             <p id="edu_auth_state_0" value="undeal">尚未认证</p>
                             <input type="button" onclick="confirm_edu(edu_0)" value="undeal"></input>
-                          </form>
+                          </form> -->
                     </div>
                 </div>
                 <div class="panel panel-default">
@@ -162,11 +164,12 @@
                             <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" class="collapse_tabs">
                                 工作经历
                                 <i class="glyphicon glyphicon-chevron-down" style="float: right;font-size: 13px;"></i>
+                                <input type="button" onclick="addAEduView()" value="添加一条"></input>
                             </a>
                         </h4>
                     </div>
                     <div id="collapseTwo" class="panel-collapse collapse">
-                            <form class="form-inline" role="form" id="work_0">
+                            <!-- <form class="form-inline" role="form" id="work_0">
                                 <div class="form-group">
                                   <label>公司</label>
                                   <input type="text" class="form-control" id="company_0" placeholder="">
@@ -184,7 +187,8 @@
                                   <select id="work_end_month_0"></select>
                                 <p id="work_auth_state_0" value="undeal">尚未认证</p>
                                 <input type="button" onclick="confirm_work(work_0)" value="undeal"></input>
-                              </form> </div>
+                              </form> -->
+                            </div>
                     </div>
                 </div>
             </div>
@@ -382,8 +386,6 @@
     }
     function init(){
         EMAIL = location.search.substring(1,location.search.length);
-        initBirthYear();
-        initExpYearAndMonth();
     }
     function getExpCount(exp){//exp =edu or work
         var count = 0;
@@ -396,12 +398,99 @@
         }
         return count;
     }
+
+    function addWorkExpView(index){
+        var area = document.getElementById("collapseTwo");
+        var form = document.createElement("form");
+        form.setAttribute("class","form-inline");
+        form.setAttribute("role","form");
+        form.setAttribute("id","work_"+index);
+
+        var label0 = document.createElement("label");
+        label0.innerHTML = "公司";
+        form.appendChild(label0);
+
+        var input0 = document.createElement("input");
+        input0.setAttribute("type","text");
+        input0.setAttribute("class","form-control");
+        input0.setAttribute("id","company_"+index);
+        input0.setAttribute("placeholder","");
+        form.appendChild(input0);
+
+        var label1 = document.createElement("label");
+        label1.innerHTML = "职务";
+        form.appendChild(label1);
+
+        var input1 = document.createElement("input");
+        input1.setAttribute("type","text");
+        input1.setAttribute("class","form-control");
+        input1.setAttribute("id","position_"+index);
+        input1.setAttribute("placeholder","");
+        form.appendChild(input1);
+
+        var label1 = document.createElement("label");
+        label1.innerHTML = "描述";
+        form.appendChild(label1);
+
+        var input1 = document.createElement("input");
+        input1.setAttribute("type","text");
+        input1.setAttribute("class","form-control");
+        input1.setAttribute("id","content_"+index);
+        input1.setAttribute("placeholder","");
+        form.appendChild(input1);
+
+
+        var label_begin_year = document.createElement("label");
+        label_begin_year.innerHTML = "起始年份";
+        form.appendChild(label_begin_year);
+        var select_begin_year = document.createElement("select");
+        select_begin_year.setAttribute("id","work_begin_year_"+index);
+        form.appendChild(select_begin_year);
+
+        
+        var label_begin_month = document.createElement("label");
+        label_begin_month.innerHTML = "起始年份";
+        form.appendChild(label_begin_month);
+        var select_begin_month = document.createElement("select");
+        select_begin_month.setAttribute("id","work_begin_month_"+index);
+        form.appendChild(select_begin_month);
+
+        var label_end_year = document.createElement("label");
+        label_end_year.innerHTML = "起始年份";
+        form.appendChild(label_end_year);
+        var select_end_year = document.createElement("select");
+        select_end_year.setAttribute("id","work_end_year_"+index);
+        form.appendChild(select_end_year);
+
+        
+        var label_end_month = document.createElement("label");
+        label_end_month.innerHTML = "起始年份";
+        form.appendChild(label_end_month);
+        var select_end_month = document.createElement("select");
+        select_end_month.setAttribute("id","work_end_month_"+index);
+        form.appendChild(select_end_month);
+
+        var p =document.createElement("p");
+        p.setAttribute("id","work_auth_state_"+index);
+        p.setAttribute("value","undeal");
+        p.innerHTML="尚未认证";
+        form.appendChild(p);
+
+        var input = document.createElement("input");
+        input.setAttribute("type","button");
+        input.setAttribute("onclick","confirm_work(work_"+index+")");
+        input.setAttribute("value","undeal");
+        form.appendChild(input);
+        
+        area.appendChild(form);
+    }
+
     function addEduExpView(index) {
         var area = document.getElementById("collapseOne");
         var form = document.createElement("form");
         form.setAttribute("class","form-inline");
         form.setAttribute("role","form");
-        form.setAttribute("id","edu_0");
+        form.setAttribute("id","edu_"+index);
 
         var label0 = document.createElement("label");
         label0.innerHTML = "学校";
@@ -427,6 +516,7 @@
 
         var select = document.createElement("select");
         select.setAttribute("value","degree_"+index);
+        select.setAttribute("id","degree_"+index);
 
         var option0 = document.createElement("option");
         option0.setAttribute("value","学士");
@@ -450,30 +540,30 @@
         label_begin_year.innerHTML = "起始年份";
         form.appendChild(label_begin_year);
         var select_begin_year = document.createElement("select");
-        select.setAttribute("id","edu_begin_year_"+index);
+        select_begin_year.setAttribute("id","edu_begin_year_"+index);
         form.appendChild(select_begin_year);
 
         
         var label_begin_month = document.createElement("label");
-        label_begin_month.innerHTML = "起始年份";
+        label_begin_month.innerHTML = "起始月份";
         form.appendChild(label_begin_month);
         var select_begin_month = document.createElement("select");
-        select.setAttribute("id","edu_begin_month_"+index);
+        select_begin_month.setAttribute("id","edu_begin_month_"+index);
         form.appendChild(select_begin_month);
 
         var label_end_year = document.createElement("label");
-        label_end_year.innerHTML = "起始年份";
+        label_end_year.innerHTML = "终止年份";
         form.appendChild(label_end_year);
         var select_end_year = document.createElement("select");
-        select.setAttribute("id","edu_end_year_"+index);
+        select_end_year.setAttribute("id","edu_end_year_"+index);
         form.appendChild(select_end_year);
 
         
         var label_end_month = document.createElement("label");
-        label_end_month.innerHTML = "起始年份";
+        label_end_month.innerHTML = "终止月份";
         form.appendChild(label_end_month);
         var select_end_month = document.createElement("select");
-        select.setAttribute("id","edu_end_month_"+index);
+        select_end_month.setAttribute("id","edu_end_month_"+index);
         form.appendChild(select_end_month);
 
         var p =document.createElement("p");
@@ -490,9 +580,15 @@
         
         area.appendChild(form);
     }
+
+    function addAEduView(){
+        addEduExpView(getExpCount("edu"));
+    }
+    function addAWorkView(){
+        addWorkExpView(getExpCount("work"));
+    }
     window.onload=function(){
         init();
-        addEduExpView(2);
         var data= Promise.resolve(getResume())
         Promise.resolve(getResume()).then(function (resume) { 
             resume = myJSONParse(resume);
@@ -505,14 +601,56 @@
             document.getElementById("position").setAttribute("value",resume["position"]); 
             document.getElementById("birth_year").value = resume["birth_year"];  
             document.getElementById("gender").value = resume["gender"];    
-            if(resume.hasOwnProperty("edu_exp")){
-                var edu_exp = resume["edu_exp"];
-                for(var i=0;i<edu_exp.length;i++){
-                    console.log(edu_exp);
-                }
+            var edu_count = eval(resume["edu_exp"]).length;
+            if(edu_count == 0){
+                edu_count=1;
             }
-            if(resume.hasOwnProperty("work_exp")){
-
+            var work_count = eval(resume["work_exp"]).length;
+            if(work_count == 0){
+                work_count=1;
+            }
+            
+            for(var i=0;i<edu_count;i++){
+                addEduExpView(i);
+            }
+            for(var i=0;i<work_count;i++){
+                addWorkExpView(i);
+            } 
+            initBirthYear();
+            initExpYearAndMonth();
+            for(var i=0;i<edu_count;i++){
+                var edu = eval(resume["edu_exp"][i]);
+                var school = document.getElementById("school_"+i);
+                school.setAttribute("value",edu["school"]);
+                var major = document.getElementById("major_"+i);
+                major.setAttribute("value",edu["major"]);
+                var degree = document.getElementById("degree_"+i);
+                degree.value = edu["degree"];
+                var edu_begin_year = document.getElementById("edu_begin_year_"+i);
+                edu_begin_year.value = edu["edu_begin_year"];
+                var edu_begin_month = document.getElementById("edu_begin_month_"+i);
+                edu_begin_month.value = edu["edu_begin_month"];
+                var edu_end_year = document.getElementById("edu_end_year_"+i);
+                edu_end_year.value = edu["edu_end_year"];
+                var edu_end_month = document.getElementById("edu_end_month_"+i);
+                edu_end_month.value = edu["edu_end_month"];
+            }
+            for(var i=0;i<work_count;i++){
+                var work = eval(resume["work_exp"][i]);
+                var company = document.getElementById("company_"+i);
+                company.setAttribute("value",work["company"]);
+                var position = document.getElementById("position_"+i);
+                position.setAttribute("value",work["position"]);
+                var content = document.getElementById("content_"+i);
+                content.value = work["content"];
+                var work_begin_year = document.getElementById("work_begin_year_"+i);
+                work_begin_year.value = work["work_begin_year"];
+                var work_begin_month = document.getElementById("work_begin_month_"+i);
+                work_begin_month.value = work["work_begin_month"];
+                var work_end_year = document.getElementById("work_end_year_"+i);
+                work_end_year.value = work["work_end_year"];
+                var work_end_month = document.getElementById("work_end_month_"+i);
+                work_end_month.value = work["work_end_month"];
             }
         })
         }
