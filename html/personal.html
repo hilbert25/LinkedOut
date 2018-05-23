@@ -130,7 +130,7 @@
                             <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" class="collapse_tabs">
                                 教育经历
                                 <i class="glyphicon glyphicon-chevron-up" style="float: right;font-size: 13px;"></i>
-                                <input type="button" onclick="addAWorkView()" value="添加一条"></input>
+                                <input type="button" onclick="addAEduView()" value="添加一条"></input>
                             </a>
                         </h4>
                     </div>
@@ -164,7 +164,7 @@
                             <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" class="collapse_tabs">
                                 工作经历
                                 <i class="glyphicon glyphicon-chevron-down" style="float: right;font-size: 13px;"></i>
-                                <input type="button" onclick="addAEduView()" value="添加一条"></input>
+                                <input type="button" onclick="addAWorkView()" value="添加一条"></input>
                             </a>
                         </h4>
                     </div>
@@ -376,7 +376,7 @@
             work["position"] = document.getElementById("position_"+i.toString()).value;
             work["content"] = document.getElementById("content_"+i.toString()).value;
             work["work_begin_year"] = document.getElementById("work_begin_year_"+i.toString()).value;
-            work["ework_begin_month"] = document.getElementById("work_begin_month_"+i.toString()).value;
+            work["work_begin_month"] = document.getElementById("work_begin_month_"+i.toString()).value;
             work["work_end_year"] = document.getElementById("work_end_year_"+i.toString()).value;
             work["work_end_month"] = document.getElementById("work_end_month_"+i.toString()).value;
             work["work_auth_state"] = document.getElementById("work_auth_state_"+i.toString()).innerHTML;
@@ -478,7 +478,7 @@
 
         var input = document.createElement("input");
         input.setAttribute("type","button");
-        input.setAttribute("onclick","confirm_work(work_"+index+")");
+        input.setAttribute("onclick","confirm_work("+index+")");
         input.setAttribute("value","点击认证");
         form.appendChild(input);
         
@@ -587,6 +587,49 @@
     function addAWorkView(){
         addWorkExpView(getExpCount("work"));
     }
+
+
+    async function getCompanyList(){
+        return await getData(COMPANY_LIST);
+    }
+    async function getCompanyAuthList(company_name){
+        return await getData(COMPANY_AUTH_LIST+company_name);
+    }
+
+    async function confirm_work(i){
+        var company_list = await getCompanyList();
+        if(company_list == null){
+            console.log("该公司尚未注册!");
+        }else{
+            company_list = myJSONParse(company_list);
+            var company_name = document.getElementById("company_"+i).value;
+            for(var k in company_list){
+                if(k == company_name){
+                    var company_auth_list = myJSONParse(await getCompanyAuthList(company_name));
+                    if(company_auth_list == null){
+                        company_auth_list ={};
+                    }
+                    console.log(company_auth_list);
+                    var work = {};
+                    work["company"] = document.getElementById("company_"+i.toString()).value;
+                    work["position"] = document.getElementById("position_"+i.toString()).value;
+                    work["content"] = document.getElementById("content_"+i.toString()).value;
+                    work["work_begin_year"] = document.getElementById("work_begin_year_"+i.toString()).value;
+                    work["work_begin_month"] = document.getElementById("work_begin_month_"+i.toString()).value;
+                    work["work_end_year"] = document.getElementById("work_end_year_"+i.toString()).value;
+                    work["work_end_month"] = document.getElementById("work_end_month_"+i.toString()).value;
+                    work["work_auth_state"] = document.getElementById("work_auth_state_"+i.toString()).innerHTML;
+                    company_auth_list[EMAIL] = work;
+                    var res = {};
+                    res[COMPANY_AUTH_LIST+company_name] = company_auth_list;
+                    console.log(COMPANY_AUTH_LIST+company_name);
+                   // await setData(dicToMyJSON(res));  
+                    return;
+                 }
+            console.log("该公司尚未注册");
+            }
+        }
+    }
     window.onload=function(){
         init();
         Promise.resolve(getResume()).then(function (resume) { 
@@ -633,6 +676,8 @@
                 edu_end_year.value = edu["edu_end_year"];
                 var edu_end_month = document.getElementById("edu_end_month_"+i);
                 edu_end_month.value = edu["edu_end_month"];
+                var edu_auth_state = document.getElementById("edu_auth_state_"+i);
+                edu_auth_state.innerHTML = edu["edu_auth_state"];
             }
             for(var i=0;i<work_count;i++){
                 var work = eval(resume["work_exp"][i]);
@@ -650,9 +695,11 @@
                 work_end_year.value = work["work_end_year"];
                 var work_end_month = document.getElementById("work_end_month_"+i);
                 work_end_month.value = work["work_end_month"];
+                work_auth_state.innerHTML = edu["work_auth_state"];
             }
         })
-        }
+
+     }
 </script>
 
     </body>

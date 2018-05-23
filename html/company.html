@@ -57,16 +57,27 @@
         }
 
         async function getCompanyList(){
-            return await getData("company_list");
+            return await getData(COMPANY_LIST);
         }
 
         async function save_company_name(){
-            var company_name = document.getElementById("company_name");
-            console.log(company_name);
-            company_list[email] = company_name.value;
-            var data = dicToMyJSON({"company_list":company_list});
-            await setData(data);
-            location.reload();
+            var data= (await getCompanyList()).toString();
+            var company_list ={};
+            var company_name = document.getElementById("company_name").value;
+            if(data != "null"){
+                data = myJSONParse(data);
+                company_list = data[COMPANY_LIST];
+            }else{
+                data={};
+            }
+            company_list[company_name] = email;
+            data[COMPANY_LIST] = company_list;
+            await setData(dicToMyJSON(data));
+        }
+
+        async function getCompanyAuthList(company_name){
+            console.log(COMPANY_AUTH_LIST+company_name);
+            return await getData(COMPANY_AUTH_LIST+company_name);
         }
         window.onload=function(){
             email = location.search.substring(1,location.search.length);
@@ -80,7 +91,15 @@
                     company_name.style.visibility="hidden";
                     company_name_submit.style.visibility="hidden";
                     var company_name_p = document.getElementById("company_name_p");
-                    company_name_p.innerHTML = company_list[email];
+                    for(var key in company_list){
+                        if(company_list[key] == email){
+                            company_name_p.innerHTML = key;
+                            Promise.resolve(getCompanyAuthList(key)).then(function(auth_list){
+                                console.log(auth_list);
+                            });
+                            break;
+                        }
+                    }
                 }
             });
         }
