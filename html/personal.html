@@ -197,14 +197,14 @@
     </div>
   </div>
 </div>
-        <script type="text/javascript" src="../src/js/jquery.min.js"></script>
-        <script type="text/javascript" src="../src/js/bootstrap.min.js"></script> 
-        <script type="text/javascript" src="../src/js/easyResponsiveTabs.min.js"></script> 	
-        <script type="text/javascript" src="../src/js/jquery.mCustomScrollbar.concat.min.js"></script>		
-        <script type="text/javascript" src="../src/js/main.js"></script>
-        <script src="../libs/nebulas.js"></script>
-        <script src="../libs/nebPay.js"></script>
-        <script type="text/javascript" src="../libs/util.js"></script>
+<script type="text/javascript" src="../src/js/jquery.min.js"></script>
+<script type="text/javascript" src="../src/js/bootstrap.min.js"></script> 
+<script type="text/javascript" src="../src/js/easyResponsiveTabs.min.js"></script> 	
+<script type="text/javascript" src="../src/js/jquery.mCustomScrollbar.concat.min.js"></script>		
+<script type="text/javascript" src="../src/js/main.js"></script>
+<script src="../libs/nebulas.js"></script>
+<script src="../libs/nebPay.js"></script>
+<script type="text/javascript" src="../libs/util.js"></script>
 <script type="text/javascript">
     "use strict";
     var nebulas = require("nebulas");
@@ -479,7 +479,7 @@
         var input = document.createElement("input");
         input.setAttribute("type","button");
         input.setAttribute("onclick","confirm_work(work_"+index+")");
-        input.setAttribute("value","undeal");
+        input.setAttribute("value","点击认证");
         form.appendChild(input);
         
         area.appendChild(form);
@@ -575,7 +575,7 @@
         var input = document.createElement("input");
         input.setAttribute("type","button");
         input.setAttribute("onclick","confirm_edu(edu_"+index+")");
-        input.setAttribute("value","undeal");
+        input.setAttribute("value","点击认证");
         form.appendChild(input);
         
         area.appendChild(form);
@@ -589,7 +589,6 @@
     }
     window.onload=function(){
         init();
-        var data= Promise.resolve(getResume())
         Promise.resolve(getResume()).then(function (resume) { 
             resume = myJSONParse(resume);
             if(resume == null){

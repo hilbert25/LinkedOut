@@ -2,8 +2,9 @@ var TYPE = "-type";
 var PWD = "-pwd";
 var RESUME = "-resume";
 var USER = "";
+var COMPANY = "";
 function getContractAddress(){
-    return "n1tucGYf2q4aF4DK5XzBy7t3WEfs5wZfYSo";
+    return "n1pFAiC6ceTQq3EQ31Z3jvtR3v6xDieWjKF";
 }
 
 function dicToMyJSON(dict){

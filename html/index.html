@@ -59,17 +59,18 @@
       if(registered!=="null"){
         alert("邮箱已注册，可以直接登陆"); 
       }else{
-        if(type == 1){
-          var register_dic={}
-          register_dic[email.toString()+PWD] = password;
-          register_dic[email.toString()+TYPE] = type;
-          var value = dicToMyJSON(register_dic);
-          await setData(value);
-        }else if(type==2){
-          var company_list = await getData("company_list");
-        }else if(type==3){
-          var school_list = await getData("school_list");
-        }
+        var register_dic={}
+        register_dic[email.toString()+PWD] = password;
+        register_dic[email.toString()+TYPE] = type;
+        var value = dicToMyJSON(register_dic);
+        await setData(value);
+        // if(type == 1){
+        //   window.location.href = "personal.html?"+email;
+        // }else if(type==2){
+        //   window.location.href = "company.html?"+email;
+        // }else if(type==3){
+        //   window.location.href = "school.html?"+email;
+        // }
       }
     }
     
