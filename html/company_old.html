@@ -1,0 +1,108 @@
+<html>
+<head>
+
+
+</head>
+<body>
+
+<input id="company_name"></input>
+<input id="company_name_submit" type ="button" onclick="save_company_name()" value="提交"></input>
+<p id="company_name_p">尚未填写公司名</p>
+    <script type="text/javascript" src="../src/js/jquery.min.js"></script>
+    <script type="text/javascript" src="../src/js/bootstrap.min.js"></script> 
+    <script type="text/javascript" src="../src/js/easyResponsiveTabs.min.js"></script> 	
+    <script type="text/javascript" src="../src/js/jquery.mCustomScrollbar.concat.min.js"></script>		
+    <script type="text/javascript" src="../src/js/main.js"></script>
+    <script src="../libs/nebulas.js"></script>
+    <script src="../libs/nebPay.js"></script>
+    <script type="text/javascript" src="../libs/util.js"></script>
+    <script>
+        "use strict";
+        var nebulas = require("nebulas"),
+            Account = nebulas.Account,
+            neb = new nebulas.Neb();
+            neb.setRequest(new nebulas.HttpRequest("https://testnet.nebulas.io"));
+        var NebPay = require("nebpay");
+        var nebPay = new NebPay();
+        var dappAddress = getContractAddress();
+        var email = "";
+        var company_list="";
+        async function getData(args){
+            var dappAddress = getContractAddress();
+            var nebulas = require("nebulas"),
+                Account = nebulas.Account,
+                neb = new nebulas.Neb();
+            neb.setRequest(new nebulas.HttpRequest("https://testnet.nebulas.io"));
+            var NebPay = require("nebpay");
+            var nebPay = new NebPay();
+            var serialNumber;
+            var from = Account.NewAccount().getAddressString();
+            var value = "0";   
+            var nonce = "0";   
+            var gas_price = "1000000" 
+            var gas_limit = "2000000" ; 
+            var contract = { 
+                "function": "get",  
+                "args": "[\""+args+"\"]"           
+            };
+            var r = await (neb.api.call(from, dappAddress, value, nonce, gas_price, gas_limit, contract).then(function (res) {
+                return res['result'];  
+            }));
+            return r;
+        }
+
+        async function setData(value){
+            nebPay.call(dappAddress, "0", "set", "[\"" + value+ "\"]", {
+            });
+        }
+
+        async function getCompanyList(){
+            return await getData(COMPANY_LIST);
+        }
+
+        async function save_company_name(){
+            var data= (await getCompanyList()).toString();
+            var company_list ={};
+            var company_name = document.getElementById("company_name").value;
+            if(data != "null"){
+                data = myJSONParse(data);
+                company_list = data[COMPANY_LIST];
+            }else{
+                data={};
+            }
+            company_list[company_name] = email;
+            data[COMPANY_LIST] = company_list;
+            await setData(dicToMyJSON(data));
+        }
+
+        async function getCompanyAuthList(company_name){
+            console.log(COMPANY_AUTH_LIST+company_name);
+            return await getData(COMPANY_AUTH_LIST+company_name);
+        }
+        window.onload=function(){
+            email = location.search.substring(1,location.search.length);
+            Promise.resolve(getCompanyList()).then(function (data) {
+                company_list = myJSONParse(data);
+                if(company_list == null){
+                    company_list = {};
+                }else{
+                    var company_name = document.getElementById("company_name");
+                    var company_name_submit = document.getElementById("company_name_submit");
+                    company_name.style.visibility="hidden";
+                    company_name_submit.style.visibility="hidden";
+                    var company_name_p = document.getElementById("company_name_p");
+                    for(var key in company_list){
+                        if(company_list[key] == email){
+                            company_name_p.innerHTML = key;
+                            Promise.resolve(getCompanyAuthList(key)).then(function(auth_list){
+                                console.log(auth_list);
+                            });
+                            break;
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>

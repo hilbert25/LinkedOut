@@ -1,108 +1,233 @@
-<html>
+<!doctype html>
+<html class="no-js">
 <head>
-
-
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta name="apple-mobile-web-app-title" content="Amaze UI" />
+<link rel="stylesheet" href="../src/css/amazeui.css"/>
+<link rel="stylesheet" href="../src/css/admin.css">
+<script src="../src/js/app.js"></script>
 </head>
 <body>
+</head>
 
-<input id="company_name"></input>
-<input id="company_name_submit" type ="button" onclick="save_company_name()" value="提交"></input>
-<p id="company_name_p">尚未填写公司名</p>
-    <script type="text/javascript" src="../src/js/jquery.min.js"></script>
-    <script type="text/javascript" src="../src/js/bootstrap.min.js"></script> 
-    <script type="text/javascript" src="../src/js/easyResponsiveTabs.min.js"></script> 	
-    <script type="text/javascript" src="../src/js/jquery.mCustomScrollbar.concat.min.js"></script>		
-    <script type="text/javascript" src="../src/js/main.js"></script>
-    <script src="../libs/nebulas.js"></script>
-    <script src="../libs/nebPay.js"></script>
-    <script type="text/javascript" src="../libs/util.js"></script>
-    <script>
-        "use strict";
+<body>
+<header class="am-topbar admin-header">
+</header>
+<button type="button" class="am-btn am-btn-secondary am-radius" id="company_name">公司名字</button>
+<div class="am-cf admin-main"> 
+
+<div class=" admin-content">
+<div class="admin">
+
+   <div class="admin-index">
+      <dl data-am-scrollspy="{animation: 'slide-right', delay: 100}">
+        <dt class="qs"><i class="am-icon-shield"></i></dt>
+        <dd>455</dd>
+        <dd class="f12">已通过</dd>
+      </dl>
+      <dl data-am-scrollspy="{animation: 'slide-right', delay: 300}">
+        <dt class="cs"><i class="am-icon-warning"></i></dt>
+        <dd>455</dd>
+        <dd class="f12">已拒绝</dd>
+      </dl>
+      <dl data-am-scrollspy="{animation: 'slide-right', delay: 600}">
+        <dt class="hs"><i class="am-icon-drupal"></i></dt>
+        <dd>455</dd>
+        <dd class="f12">待处理</dd>
+      </dl>
+      <dl data-am-scrollspy="{animation: 'slide-right', delay: 900}">
+        <dt class="ls"><i class="am-icon-bookmark"></i></dt>
+        <dd>455</dd>
+        <dd class="f12">全部请求</dd>
+      </dl>
+    </div>
+    <div class="admin-biaoge">
+      <div class="xinxitj">待处理</div>
+      <table class="am-table">
+        <thead>
+          <tr>
+            <th>编号</th>
+            <th>姓名</th>
+            <th>邮箱</th>
+            <th>工作开始时间</th>
+            <th>工作结束时间</th>
+            <th>职务</th>
+            <th>工作内容描述</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>普卡</td>
+            <td>普卡</td>
+            <td>4534</td>
+            <td>+50</td>
+            <td> 4534 </td>
+            <td>普卡</td>
+            <td>普卡</td>
+            <td><button type="button" class="am-btn am-btn-primary">通过</button><button type="button" class="am-btn am-btn-primary">拒绝</button></td>
+          </tr>
+        </tbody>
+      </table>
+      </table>
+      <div class="xinxitj">已通过</div>
+      <table class="am-table">
+        <thead>
+          <tr>
+            <th>编号</th>
+            <th>申请人姓名</th>
+            <th>申请人邮箱</th>
+            <th>工作开始时间</th>
+            <th>工作结束时间</th>
+            <th>职务</th>
+            <th>描述</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>普卡</td>
+            <td>普卡</td>
+            <td>4534</td>
+            <td>+50</td>
+            <td> 4534 </td>
+            <td>普卡</td>
+            <td>普卡</td>
+            <td><button type="button" class="am-btn am-btn-primary">通过</button><button type="button" class="am-btn am-btn-primary">拒绝</button></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="xinxitj">已拒绝</div>
+      <table class="am-table">
+        <thead>
+          <tr>
+            <th>编号</th>
+            <th>申请人姓名</th>
+            <th>申请人邮箱</th>
+            <th>工作开始时间</th>
+            <th>工作结束时间</th>
+            <th>职务</th>
+            <th>描述</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>普卡</td>
+            <td>普卡</td>
+            <td>4534</td>
+            <td>+50</td>
+            <td> 4534 </td>
+            <td>普卡</td>
+            <td>普卡</td>
+            <td><button type="button" class="am-btn am-btn-primary">通过</button><button type="button" class="am-btn am-btn-primary">拒绝</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+      <script type="text/javascript">jQuery(".slideTxtBox").slide();</script> 
+</div>
+</div>
+</div>
+</div>
+<script src="../src/js/amazeui.min.js"></script>
+<script type="text/javascript" src="../src/js/jquery.min.js"></script>
+<script type="text/javascript" src="../src/js/bootstrap.min.js"></script> 
+<script type="text/javascript" src="../src/js/easyResponsiveTabs.min.js"></script> 	
+<script type="text/javascript" src="../src/js/jquery.mCustomScrollbar.concat.min.js"></script>		
+<script type="text/javascript" src="../src/js/main.js"></script>
+<script src="../libs/nebulas.js"></script>
+<script src="../libs/nebPay.js"></script>
+<script type="text/javascript" src="../libs/util.js"></script>
+<script>
+    "use strict";
+    var nebulas = require("nebulas"),
+        Account = nebulas.Account,
+        neb = new nebulas.Neb();
+        neb.setRequest(new nebulas.HttpRequest("https://testnet.nebulas.io"));
+    var NebPay = require("nebpay");
+    var nebPay = new NebPay();
+    var dappAddress = getContractAddress();
+    var email = "";
+    var company_list="";
+    async function getData(args){
+        var dappAddress = getContractAddress();
         var nebulas = require("nebulas"),
             Account = nebulas.Account,
             neb = new nebulas.Neb();
-            neb.setRequest(new nebulas.HttpRequest("https://testnet.nebulas.io"));
+        neb.setRequest(new nebulas.HttpRequest("https://testnet.nebulas.io"));
         var NebPay = require("nebpay");
         var nebPay = new NebPay();
-        var dappAddress = getContractAddress();
-        var email = "";
-        var company_list="";
-        async function getData(args){
-            var dappAddress = getContractAddress();
-            var nebulas = require("nebulas"),
-                Account = nebulas.Account,
-                neb = new nebulas.Neb();
-            neb.setRequest(new nebulas.HttpRequest("https://testnet.nebulas.io"));
-            var NebPay = require("nebpay");
-            var nebPay = new NebPay();
-            var serialNumber;
-            var from = Account.NewAccount().getAddressString();
-            var value = "0";   
-            var nonce = "0";   
-            var gas_price = "1000000" 
-            var gas_limit = "2000000" ; 
-            var contract = { 
-                "function": "get",  
-                "args": "[\""+args+"\"]"           
-            };
-            var r = await (neb.api.call(from, dappAddress, value, nonce, gas_price, gas_limit, contract).then(function (res) {
-                return res['result'];  
-            }));
-            return r;
-        }
+        var serialNumber;
+        var from = Account.NewAccount().getAddressString();
+        var value = "0";   
+        var nonce = "0";   
+        var gas_price = "1000000" 
+        var gas_limit = "2000000" ; 
+        var contract = { 
+            "function": "get",  
+            "args": "[\""+args+"\"]"           
+        };
+        var r = await (neb.api.call(from, dappAddress, value, nonce, gas_price, gas_limit, contract).then(function (res) {
+            return res['result'];  
+        }));
+        return r;
+    }
 
-        async function setData(value){
-            nebPay.call(dappAddress, "0", "set", "[\"" + value+ "\"]", {
-            });
-        }
+    async function setData(value){
+        nebPay.call(dappAddress, "0", "set", "[\"" + value+ "\"]", {
+        });
+    }
 
-        async function getCompanyList(){
-            return await getData(COMPANY_LIST);
-        }
+    async function getCompanyList(){
+        return await getData(COMPANY_LIST);
+    }
 
-        async function save_company_name(){
-            var data= (await getCompanyList()).toString();
-            var company_list ={};
-            var company_name = document.getElementById("company_name").value;
-            if(data != "null"){
-                data = myJSONParse(data);
-                company_list = data[COMPANY_LIST];
+    async function save_company_name(){
+        var data= (await getCompanyList()).toString();
+        var company_list ={};
+        var company_name = document.getElementById("company_name").value;
+        if(data != "null"){
+            data = myJSONParse(data);
+            company_list = data[COMPANY_LIST];
+        }else{
+            data={};
+        }
+        company_list[company_name] = email;
+        data[COMPANY_LIST] = company_list;
+        await setData(dicToMyJSON(data));
+    }
+
+    async function getCompanyAuthList(company_name){//申请列表
+        return await getData(COMPANY_AUTH_LIST+company_name);
+    }
+    window.onload=function(){
+        email = location.search.substring(1,location.search.length);
+        Promise.resolve(getCompanyList()).then(function (data) {
+            company_list = myJSONParse(data);
+            var undeal_list = [];
+            var rejected_list = [];
+            var accepted_list = [];
+            if(company_list == null){
+                company_list = {};
             }else{
-                data={};
-            }
-            company_list[company_name] = email;
-            data[COMPANY_LIST] = company_list;
-            await setData(dicToMyJSON(data));
-        }
-
-        async function getCompanyAuthList(company_name){
-            console.log(COMPANY_AUTH_LIST+company_name);
-            return await getData(COMPANY_AUTH_LIST+company_name);
-        }
-        window.onload=function(){
-            email = location.search.substring(1,location.search.length);
-            Promise.resolve(getCompanyList()).then(function (data) {
-                company_list = myJSONParse(data);
-                if(company_list == null){
-                    company_list = {};
-                }else{
-                    var company_name = document.getElementById("company_name");
-                    var company_name_submit = document.getElementById("company_name_submit");
-                    company_name.style.visibility="hidden";
-                    company_name_submit.style.visibility="hidden";
-                    var company_name_p = document.getElementById("company_name_p");
-                    for(var key in company_list){
-                        if(company_list[key] == email){
-                            company_name_p.innerHTML = key;
-                            Promise.resolve(getCompanyAuthList(key)).then(function(auth_list){
-                                console.log(auth_list);
-                            });
-                            break;
-                        }
+                var company_name = document.getElementById("company_name");
+                var company_name_submit = document.getElementById("company_name_submit");
+                for(var key in company_list){
+                    if(company_list[key] == email){
+                        company_name.innerHTML = key;//找到公司名字
+                        Promise.resolve(getCompanyAuthList(key)).then(function(auth_list){//遍历申请列表
+                            console.log(auth_list);
+                        });
+                        break;
                     }
                 }
-            });
-        }
-    </script>
+            }
+        });
+        console.log(a);
+    }
+</script>
 </body>
 </html>
