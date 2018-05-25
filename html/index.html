@@ -48,9 +48,15 @@
     async function setData(value){
         console.log(value);
         nebPay.call(dappAddress, "0", "set", "[\"" + value+ "\"]", {
+          listener:function(resp){
+            console.log(resp);
+            intervalQuery = setInterval(function(){
+                queryResultInfo();
+            },5000);
+          }
         });
     }
-
+    var intervalQuery;
     async function register(){
       var email = document.getElementById("email").value;
       var password = document.getElementById("password").value;

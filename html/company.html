@@ -48,7 +48,6 @@
       <table class="am-table">
         <thead>
           <tr>
-            <th>编号</th>
             <th>姓名</th>
             <th>邮箱</th>
             <th>工作开始时间</th>
@@ -58,16 +57,15 @@
             <th>操作</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody id="undeal_item_list">
           <tr>
-            <td>普卡</td>
-            <td>普卡</td>
+            <!-- <td>普卡</td>
             <td>4534</td>
             <td>+50</td>
             <td> 4534 </td>
             <td>普卡</td>
             <td>普卡</td>
-            <td><button type="button" class="am-btn am-btn-primary">通过</button><button type="button" class="am-btn am-btn-primary">拒绝</button></td>
+            <td><button type="button" class="am-btn am-btn-primary">通过</button><button type="button" class="am-btn am-btn-primary">拒绝</button></td> -->
           </tr>
         </tbody>
       </table>
@@ -203,6 +201,57 @@
     async function getCompanyAuthList(company_name){//申请列表
         return await getData(COMPANY_AUTH_LIST+company_name);
     }
+    function addUndealList(name,item){
+      var undeal_item_list = document.getElementById("undeal_item_list");
+      var tr = document.createElement("tr");
+      var name_td = document.createElement("td");
+      name_td.innerHTML = name;
+      var email_td = document.createElement("td");
+      email_td.innerHTML = item["email"];
+      var begin_time_td = document.createElement("td");
+      begin_time_td.innerHTML = item["work_begin_year"]+"年"+item["work_end_month"]+"月";
+      var end_time_td = document.createElement("td");
+      end_time_td.innerHTML = item["work_end_year"]+"  年"+item["work_end_month"]+"  月";
+      var position_td = document.createElement("td");
+      position_td.innerHTML = item["position"];
+      var content_td = document.createElement("td");
+      content_td.innerHTML = item["content"];
+      var operation_td = document.createElement("td");
+      var button_pass = document.createElement("button");
+      button_pass.setAttribute("type","button");
+      button_pass.setAttribute("class","am-btn am-btn-primary");
+      button_pass.innerHTML = "通过";
+      operation_td.appendChild(button_pass);
+      var button_reject = document.createElement("button");
+      button_reject.setAttribute("type","button");
+      button_reject.setAttribute("class","am-btn am-btn-primary");
+      button_reject.innerHTML = "拒绝";
+      operation_td.appendChild(button_reject);
+      tr.appendChild(name_td);
+      tr.appendChild(email_td);
+      tr.appendChild(begin_time_td);
+      tr.appendChild(end_time_td);
+      tr.appendChild(position_td);
+      tr.appendChild(content_td);
+      tr.appendChild(operation_td);
+      undeal_item_list.appendChild(tr);
+      // <th>姓名</th>
+      //       <th>邮箱</th>
+      //       <th>工作开始时间</th>
+      //       <th>工作结束时间</th>
+      //       <th>职务</th>
+      //       <th>工作内容描述</th>
+      //       <th>操作</th>
+      // <tr>
+      //       <td>普卡</td>
+      //       <td>4534</td>
+      //       <td>+50</td>
+      //       <td> 4534 </td>
+      //       <td>普卡</td>
+      //       <td>普卡</td>
+      //       <td><button type="button" class="am-btn am-btn-primary">通过</button><button type="button" class="am-btn am-btn-primary">拒绝</button></td>
+      //     </tr>
+    }
     window.onload=function(){
         email = location.search.substring(1,location.search.length);
         Promise.resolve(getCompanyList()).then(function (data) {
@@ -219,14 +268,17 @@
                     if(company_list[key] == email){
                         company_name.innerHTML = key;//找到公司名字
                         Promise.resolve(getCompanyAuthList(key)).then(function(auth_list){//遍历申请列表
+                            auth_list = myJSONParse(auth_list);
                             console.log(auth_list);
+                            for(var name in auth_list){
+                              addUndealList(name,auth_list[name]);
+                            }
                         });
                         break;
                     }
                 }
             }
         });
-        console.log(a);
     }
 </script>
 </body>
