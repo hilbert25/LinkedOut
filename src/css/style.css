@@ -46,7 +46,7 @@ body a:hover{
 }
 .header-right h1 {
     font-size: 2.5em;
-    color: #fff;
+    color: rgb(8, 8, 8);
     margin: 0.5em 0 0;
 }
 .header-right h2 {
@@ -85,7 +85,7 @@ ul.address li {
 ul.address li ul.address-text li {
     display: inline-block;
     font-size: 1.2em;
-    color: #fff;
+    color: rgb(2, 2, 2);
     margin-top: 1em;
 	font-weight: 100;
 }
