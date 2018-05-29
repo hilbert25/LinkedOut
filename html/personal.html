@@ -86,7 +86,7 @@ padding-top: 70px;
 						<li>
 							<ul class="address-text">
 								<li><b>生日 </b></li>
-								<li id="birth_year"></li>
+								<li id="birth"></li>
 							</ul>
 						</li>
 						<li>
@@ -104,7 +104,7 @@ padding-top: 70px;
 						<li>
 						</li>
 					</ul>
-					<td><a href="javascript:;" class="md-trigger btn btn-primary btn-sm" data-modal="modal-13">修改基本信息</a></td>
+                    <td><a href="javascript:;" class="md-trigger btn btn-primary btn-sm" data-modal="modal-13">修改基本信息</a></td>
 				</div>
 				<div class="clearfix"> </div>
 			</div>
@@ -182,7 +182,7 @@ padding-top: 70px;
 					</select>
 				<br></br>
 				<label>出生日期</label>
-				<input type="date" class="form-control" id="new_birth_year">
+				<input type="date" class="form-control" id="new_birth">
 				<label>电子邮件</label>
 				<input type="email" class="form-control"  id="new_email">
 				<label>手机号码</label>
@@ -197,9 +197,10 @@ padding-top: 70px;
 			<div class="md-content">
 				<h3> 添加工作经历</h3>
 				<div class="form-group">
-					<label>公司</label>
+                    <label>公司</label>
+                    <input type="test" class="form-control"  id="new_company_name">
 					<!-- <input type="text" class="form-control" id="new_company_name"> -->
-					<label style="padding-left:10px;padding-right:200px;"> 
+					<!-- <label style="padding-left:10px;padding-right:200px;"> 
 						<span class="cls_select_span">  
         				<select id="id_select" class="cls_select" onChange="selectOnChangeFunc()">  
             				<option value="" class="cls_option_defined">---自定义---</option>  
@@ -211,7 +212,7 @@ padding-top: 70px;
     				    <span >  
     				        <input type="text" id="id_input" class="cls_input" placeholder="可选择也可自定义输入">  
     				    </span>
-					</label> 
+					</label>  -->
 					<label>开始时间</label>
 					<input type="date" class="form-control"  id="new_work_begin_time">
 					<label>结束时间</label>
@@ -221,7 +222,8 @@ padding-top: 70px;
 					<label>工作内容</label>
 					<input type="text" class="form-control"  id="new_work_content">
 				</div>
-				<input type="button" class="md-trigger btn btn-primary btn-sm" onclick="saveWorkExp()" value="提交"></input>
+                <input type="button" class="md-trigger btn btn-primary btn-sm" onclick="saveWorkExp()" value="提交"></input>
+                <input type="button" class="md-trigger btn btn-primary btn-sm" onclick="confirmWorkExp()" value="认证"></input>
 				</div>
 			</div>
 		</div>
@@ -234,15 +236,15 @@ padding-top: 70px;
 				<label>学校</label>
 				<input type="text" class="form-control" id="new_school_name">
 				<label>专业</label>
-				<input type="text" class="form-control" id="new_degree_name">
+				<input type="text" class="form-control" id="new_major_name">
 				<label>学位</label>
-				<input type="text" class="form-control" id="new_company_name">
+				<input type="text" class="form-control" id="new_degree_name">
 				<label>开始时间</label>
-				<input type="date" class="form-control"  id="new_work_begin_time">
+				<input type="date" class="form-control"  id="new_edu_begin_time">
 				<label>结束时间</label>
-				<input type="date" class="form-control" id="new_work_end_time">
+				<input type="date" class="form-control" id="new_edu_end_time">
 			</div>
-			<input type="button" class="md-trigger btn btn-primary btn-sm" onclick="saveWorkExp()" value="提交"></input>
+			<input type="button" class="md-trigger btn btn-primary btn-sm" onclick="saveEduExp()" value="提交"></input>
 			</div>
 		</div>
 	</div>
@@ -314,7 +316,7 @@ padding-top: 70px;
 		var intervalQuery;
         // 根据交易流水号查询执行结果数据
         function queryResultInfo() {
-            nebPay.queryPayInfo(serialNumber)
+            nebPay.queryPayInfo()
                 .then(function (resp) {
                     $("#result").val(resp);
                     var respObject = JSON.parse(resp)
@@ -333,19 +335,54 @@ padding-top: 70px;
 			console.log(EMAIL+RESUME);
 			var resume = await getData(EMAIL+RESUME);
 			return resume;
-		}
+        }
+        
+        function saveResume(){
+            var basicInfoItem = ["name","gender","email","birth","phone_number"];
+            var workExpItem = ["company_name","work_begin_time","work_end_time","work_position","work_content"];
+            var eduExpItem = ["school_name","major_name","degree_name","edu_begin_time","edu_end_time"];
+            var data={};
+            var resume = {};
+            for(var i=0;i<basicInfoItem.length;i++){
+                resume[basicInfoItem[i]] = document.getElementById(basicInfoItem[i]).value;
+            }
+            resume["work_exp"] = [];
+            console.log(getWorkInfoCount());
+            for(var i=1;i<getWorkInfoCount+1;i++){
+                console.log(i);
+                var workExp = {};
+                for(var j=0;j<workExpItem.length;j++){
+                    workExp[workExpItem[j]]=document.getElementById(workExpItem[j]+i).value;
+                }  
+                resume["work_exp"].push(workExp);
+            }
+            resume["edu_exp"] = [];
+            for(var i=1;i<getEduInfoCount+1;i++){
+                var eduExp = {};
+                for(var j=0;j<eduExpItem.length;j++){
+                    eduExp[eduExpItem[j]]=document.getElementById(eduExpItem[j]+i).value;
+                }
+                resume["edu_exp"].push(eduExp);  
+            }
+            console.log(dicToMyJSON(resume));
+        }
 		function saveBasicInfo(){
-			var basicInfoItem=["name","gender","email","birth_year","phone_number"];
+            var basicInfoItem=["name","gender","email","birth","phone_number"];
+            var data = {};
+            var basicInfo = {};
 			for(var i=0;i<basicInfoItem.length; i++){
 				var item = document.getElementById(basicInfoItem[i]);
-				var new_item =  document.getElementById("new_"+basicInfoItem[i]);
-				item.innerHTML=new_item.value;
-			}
+                var new_item =  document.getElementById("new_"+basicInfoItem[i]);
+                item.innerHTML=new_item.value;
+                basicInfo[basicInfoItem[i]] = new_item.value;
+            }
+            data[EMAIL+"-"+BASIC_INFO] = basicInfo;
+            setData(dicToMyJSON(data));
 			var model_13 = document.getElementById("modal-13");
 			model_13.setAttribute("class","md-modal md-effect-13");
 		}
 		function setBasicInfo(resume){//链上读取数据并显示
-			var basicInfoItem=["name","gender","email","birth_year","phone_number"];
+			var basicInfoItem=["name","gender","email","birth","phone_number"];
 			if(resume !=null){
 				for(var i=0;i<basicInfoItem.length; i++){
 					var item = document.getElementById(basicInfoItem[i]);
@@ -363,43 +400,78 @@ padding-top: 70px;
 		}
 
 		function saveWorkExp(){
-			var work_list = document.getElementById("work_list");
-			var add_work_exp = document.getElementById("modal-work-exp");
-			var work_info = document.createElement("div");
-			work_info.setAttribute("class","work-info");
-			work_info.setAttribute("id","work-info"+(getWorkInfoCount()+1));
+            Promise.resolve(getData(EMAIL+"-"+WORK_EXP)).then(function (resume) { 
+                    var old_data;
+                    if(resume!="null"){
+                        old_data = myJSONParse(resume);
+                    }else{
+                        old_data = [];
+                    }
+					console.log(old_data);
+                    var work = {};
+                    var work_list = document.getElementById("work_list");
+                    var add_work_exp = document.getElementById("modal-work-exp");
+                    var work_info = document.createElement("div");
+                    var index = getWorkInfoCount()+1;
+                    work_info.setAttribute("class","work-info");
+                    work_info.setAttribute("id","work-info"+index);
+                    
+                    var work_time = document.createElement("div");
+                    work_time.setAttribute("class","col-md-6 work-left");
+                    var work_beigin_time = document.createElement("h4");
+                    work_beigin_time.setAttribute("id","work_begin_time"+index);
+                    work_beigin_time.innerHTML=document.getElementById("new_work_begin_time").value;
+                    work["work_begin_time"] = document.getElementById("new_work_begin_time").value;
+                    work_time.appendChild(work_beigin_time);
+                    var work_end_time = document.createElement("h4");
+                    work_end_time.setAttribute("id","work_end_time"+index);
+                    work["work_end_time"] = document.getElementById("new_work_end_time").value;
+                    work_end_time.innerHTML=document.getElementById("new_work_end_time").value;
+                    work_time.appendChild(work_end_time);
+                    work_info.appendChild(work_time);
+                    
+                    var exp = document.createElement("div");
+                    exp.setAttribute("class","col-md-6 work-right");
 
-			var time = document.createElement("div");
-			time.setAttribute("class","col-md-6 work-left");
-			var h4 = document.createElement("h4");
-			h4.innerHTML=document.getElementById("new_work_begin_time").value+" 至 " +document.getElementById("new_work_end_time").value;
-			time.appendChild(h4);
-			work_info.appendChild(time);
-			var exp = document.createElement("div");
-			exp.setAttribute("class","col-md-6 work-right");
-
-			var h5 = document.createElement("h5");
-			var span = document.createElement("span");
-			span.setAttribute("class","glyphicon glyphicon-education");
-			h5.appendChild(span);
-			h5.innerHTML = document.getElementById("new_company_name").value+" : "+document.getElementById("new_work_position").value;
-			
-			var p = document.createElement("p");
-			p.innerHTML = document.getElementById("new_work_content").value;
-			exp.appendChild(h5);
-			exp.appendChild(p)
-			work_info.appendChild(exp);
-			work_list.appendChild(work_info);
-			console.log(work_info);
-			add_work_exp.setAttribute("class","md-modal md-effect-13");
+                    var h5 = document.createElement("h5");
+                    var span = document.createElement("span");
+                    span.setAttribute("class","glyphicon glyphicon-education");
+                    h5.appendChild(span);
+                    h5.setAttribute("id","company_name"+index);
+                    h5.innerHTML = document.getElementById("new_company_name").value;
+                    work["company_name"] = document.getElementById("new_company_name").value;
+                    
+                    var position = document.createElement("p");
+                    position.innerHTML = document.getElementById("new_work_position").value;
+                    work["work_position"] = document.getElementById("new_work_position").value;
+                    position.setAttribute("id","work_position"+index);
+                    var content = document.createElement("p");
+                    content.innerHTML = document.getElementById("new_work_content").value;
+                    work["work_content"] = document.getElementById("new_work_content").value;
+                    content.setAttribute("id","work_content"+index);
+                    
+                    exp.appendChild(h5);
+                    exp.appendChild(position)
+                    exp.appendChild(content)
+                    work_info.appendChild(exp);
+                    work_list.appendChild(work_info);
+                    old_data.push(work);
+                    var new_data ={};
+                    new_data[EMAIL+"-"+WORK_EXP] = old_data;
+					setData(dicToMyJSON(new_data));
+                    add_work_exp.setAttribute("class","md-modal md-effect-13");
+				})
 		}
-
 		function getWorkInfoCount(){
-			var count = 0;
-			while(document.getElementById("work-info-"+count)){
-				count+=1;
-			}
-			return count;
+            var count = 0;
+			for(var i=1;;i++){
+                if(document.getElementById("work_info"+i)){
+                    count =i;
+                }else{
+                    break;
+                }
+            }
+            return count;
 		}
 
 
@@ -412,48 +484,71 @@ padding-top: 70px;
 		}
 
 		function saveEduExp(){
-			var work_list = document.getElementById("work_list");
-			var add_work_exp = document.getElementById("modal-work-exp");
-			var work_info = document.createElement("div");
-			work_info.setAttribute("class","work-info");
-			work_info.setAttribute("id","work-info"+(getWorkInfoCount()+1));
+            var edu_list = document.getElementById("edu_list");
+			var add_edu_exp = document.getElementById("modal-edu-exp");
+            var edu_info = document.createElement("div");
+            var index = getWorkInfoCount()+1;
+			edu_info.setAttribute("class","work-info");
+			edu_info.setAttribute("id","edu-info"+index);
 
-			var time = document.createElement("div");
-			time.setAttribute("class","col-md-6 work-left");
-			var h4 = document.createElement("h4");
-			h4.innerHTML=document.getElementById("new_work_begin_time").value+" 至 " +document.getElementById("new_work_end_time").value;
-			time.appendChild(h4);
-			work_info.appendChild(time);
+            
+            
+            var edu_time = document.createElement("div");
+			edu_time.setAttribute("class","col-md-6 work-left");
+            var edu_beigin_time = document.createElement("h4");
+            edu_beigin_time.setAttribute("id","edu_begin_time"+index);
+			edu_beigin_time.innerHTML=document.getElementById("new_edu_begin_time").value;
+            edu_time.appendChild(edu_beigin_time);
+            var edu_end_time = document.createElement("h4");
+            edu_end_time.innerHTML=document.getElementById("new_edu_end_time").value;
+            edu_end_time.setAttribute("id","edu_end_time"+index);
+			edu_time.appendChild(edu_end_time);
+            edu_info.appendChild(edu_time);
+
+
 			var exp = document.createElement("div");
 			exp.setAttribute("class","col-md-6 work-right");
 
 			var h5 = document.createElement("h5");
 			var span = document.createElement("span");
 			span.setAttribute("class","glyphicon glyphicon-education");
-			h5.appendChild(span);
-			h5.innerHTML = document.getElementById("new_company_name").value+" : "+document.getElementById("new_work_position").value;
-			
-			var p = document.createElement("p");
-			p.innerHTML = document.getElementById("new_work_content").value;
-			exp.appendChild(h5);r
-			exp.appendChild(p)
-			work_info.appendChild(exp);
-			work_list.appendChild(work_info);
-			console.log(work_info);
-			add_work_exp.setAttribute("class","md-modal md-effect-13");
+            h5.appendChild(span);
+            h5.setAttribute("id","school_name"+index);
+			h5.innerHTML = document.getElementById("new_school_name").value;
+            
+            var major = document.createElement("p");
+            major.setAttribute("id","major_name"+index);
+            major.innerHTML = document.getElementById("new_major_name").value;
+            var degree = document.createElement("p");
+            degree.setAttribute("id","degree_name"+index);
+            degree.innerHTML = document.getElementById("new_degree_name").value;
+            
+            exp.appendChild(h5);
+            exp.appendChild(major)
+			exp.appendChild(degree)
+			edu_info.appendChild(exp);
+			edu_list.appendChild(edu_info);
+            
+
+			add_edu_exp.setAttribute("class","md-modal md-effect-13");
 		}
 
 		function getEduInfoCount(){
 			var count = 0;
-			while(document.getElementById("work-info-"+count)){
-				count+=1;
-			}
-			return count;
+			for(var i=1;;i++){
+                if(document.getElementById("edu_info"+i)){
+                    count =i;
+                }else{
+                    break;
+                }
+            }
+            return count;
 		}
 
 		function selectOnChangeFunc() {  
             document.getElementById('id_input').value = document.getElementById('new_gender').options[document.getElementById('new_gender').selectedIndex].value;  
         }
+
 		window.onload=function(){
 			EMAIL = location.search.substring(1,location.search.length);
 			Promise.resolve(getResume()).then(function (resume) { 
